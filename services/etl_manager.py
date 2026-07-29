@@ -29,7 +29,6 @@ class ETLManager:
         print("Starting GA4 ETL")
         print("=" * 60)
 
-        # ---------------- Active Users ----------------
 
         print("Fetching Active Users...")
 
@@ -42,7 +41,6 @@ class ETLManager:
 
         print(f"{len(active_df)} rows inserted.")
 
-        # ---------------- Engagement ----------------
 
         print("Fetching Engagement...")
 
@@ -55,7 +53,6 @@ class ETLManager:
 
         print(f"{len(engagement_df)} rows inserted.")
 
-        # ---------------- Events ----------------
 
         print("Fetching Events...")
 
@@ -68,7 +65,6 @@ class ETLManager:
 
         print(f"{len(event_df)} rows inserted.")
 
-        # ---------------- Revenue ----------------
 
         print("Fetching Revenue...")
 
@@ -81,7 +77,6 @@ class ETLManager:
 
         print(f"{len(revenue_df)} rows inserted.")
 
-        # ---------------- Modules ----------------
 
         try:
 

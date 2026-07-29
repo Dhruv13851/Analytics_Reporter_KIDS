@@ -5,7 +5,6 @@ from repositories.report_repository import ReportRepository
 
 
 class ReportManager:
-    """Service responsible for generating report data."""
 
     def __init__(self):
         self.report_repository = ReportRepository()

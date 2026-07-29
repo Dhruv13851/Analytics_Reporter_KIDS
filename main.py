@@ -6,9 +6,6 @@ from services.comparison_service import ComparisonService
 
 def main():
 
-    # --------------------------------------------------
-    # Step 1: Run ETL (Optional)
-    # --------------------------------------------------
     etl = ETLManager()
 
     etl.run(
@@ -16,9 +13,7 @@ def main():
         end_date="2026-07-27",
     )
 
-    # --------------------------------------------------
-    # Step 2: Generate Monthly Reports
-    # --------------------------------------------------
+   
     report_manager = ReportManager()
 
     current_report = report_manager.generate_monthly_report(
@@ -31,9 +26,7 @@ def main():
         month=6,
     )
 
-    # --------------------------------------------------
-    # Step 3: Export Monthly Reports (Optional)
-    # --------------------------------------------------
+   
     exporter = ReportExporter()
 
     current_report_path = exporter.export_json(current_report)
@@ -42,9 +35,7 @@ def main():
     print(f"Current report saved to: {current_report_path}")
     print(f"Previous report saved to: {previous_report_path}")
 
-    # --------------------------------------------------
-    # Step 4: Generate Comparison
-    # --------------------------------------------------
+ 
     comparison_service = ComparisonService()
 
     comparison = comparison_service.compare_months(

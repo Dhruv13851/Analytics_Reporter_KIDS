@@ -8,7 +8,6 @@ class ReportExporter:
 
     def export_json(self, report, filename=None):
 
-        # Create directory if it doesn't exist
         self.OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
         if filename is None:
@@ -17,7 +16,6 @@ class ReportExporter:
                 f"{report['metadata']['month']:02d}.json"
             )
 
-        # Create a Path object
         output_path = self.OUTPUT_DIR / filename
 
         with output_path.open("w", encoding="utf-8") as f:
@@ -28,7 +26,6 @@ class ReportExporter:
                 default=self._json_serializer,
             )
 
-        # Return string path if you want to print it
         return str(output_path)
 
     @staticmethod

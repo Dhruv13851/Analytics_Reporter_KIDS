@@ -1,5 +1,194 @@
-class ComparisonService:
+# class ComparisonService:
 
+#     def calculate_metric_change(
+#         self,
+#         current,
+#         previous
+#     ):
+
+#         current = current or 0
+#         previous = previous or 0
+
+#         difference = current - previous
+
+#         if previous == 0:
+#             percentage = 0 if current == 0 else 100
+#         else:
+#             percentage = (difference / previous) * 100
+
+#         return {
+#             "current": current,
+#             "previous": previous,
+#             "difference": difference,
+#             "percentage_change": round(
+#                 percentage,
+#                 2
+#             )
+#         }
+
+#     def compare_numeric_section(
+#         self,
+#         current_section,
+#         previous_section
+#     ):
+
+#         comparison = {}
+
+#         previous_section = previous_section or {}
+
+#         for metric_name, current_value in current_section.items():
+
+#             if not isinstance(
+#                 current_value,
+#                 (int, float)
+#             ):
+#                 continue
+
+#             comparison[metric_name] = (
+#                 self.calculate_metric_change(
+#                     current_value,
+#                     previous_section.get(
+#                         metric_name,
+#                         0
+#                     )
+#                 )
+#             )
+
+#         return comparison
+
+#     def compare_ranked_items(
+#         self,
+#         current_items,
+#         previous_items,
+#         name_key,
+#         value_key
+#     ):
+
+#         comparison = {}
+
+#         previous_lookup = {
+#             item[name_key]: item
+#             for item in previous_items
+#         }
+
+#         current_lookup = {
+#             item[name_key]: item
+#             for item in current_items
+#         }
+
+#         all_names = (
+#             set(current_lookup.keys())
+#             | set(previous_lookup.keys())
+#         )
+
+#         for name in sorted(all_names):
+
+#             current_value = (
+#                 current_lookup
+#                 .get(name, {})
+#                 .get(value_key, 0)
+#             )
+
+#             previous_value = (
+#                 previous_lookup
+#                 .get(name, {})
+#                 .get(value_key, 0)
+#             )
+
+#             comparison[name] = (
+#                 self.calculate_metric_change(
+#                     current_value,
+#                     previous_value
+#                 )
+#             )
+
+#         return comparison
+
+#     def compare_months(
+#         self,
+#         current,
+#         previous
+#     ):
+
+#         previous = previous or {}
+
+#         comparison = {}
+
+#         # ---------------------------
+#         # Numeric summaries
+#         # ---------------------------
+
+#         numeric_sections = [
+
+#             "users",
+#             "engagement",
+#             "revenue",
+
+#         ]
+
+#         for section in numeric_sections:
+
+#             if section in current:
+
+#                 comparison[section] = (
+#                     self.compare_numeric_section(
+#                         current[section],
+#                         previous.get(
+#                             section,
+#                             {}
+#                         )
+#                     )
+#                 )
+
+#         # ---------------------------
+#         # Event Summary
+#         # ---------------------------
+
+#         if (
+#             "events" in current
+#             and "top_events" in current["events"]
+#         ):
+
+#             comparison["events"] = {
+
+#                 "top_events":
+#                 self.compare_ranked_items(
+#                     current["events"]["top_events"],
+#                     previous
+#                     .get("events", {})
+#                     .get("top_events", []),
+#                     name_key="event_name",
+#                     value_key="event_count"
+#                 )
+
+#             }
+
+#         # ---------------------------
+#         # Module Summary
+#         # ---------------------------
+
+#         if (
+#             "modules" in current
+#             and "top_modules" in current["modules"]
+#         ):
+
+#             comparison["modules"] = {
+
+#                 "top_modules":
+#                 self.compare_ranked_items(
+#                     current["modules"]["top_modules"],
+#                     previous
+#                     .get("modules", {})
+#                     .get("top_modules", []),
+#                     name_key="module_name",
+#                     value_key="event_count"
+#                 )
+
+#             }
+
+#         return comparison
+
+class ComparisonService:
 
     def calculate_metric_change(
         self,
@@ -7,15 +196,15 @@ class ComparisonService:
         previous
     ):
 
+        current = current or 0
+        previous = previous or 0
+
         difference = current - previous
 
         if previous == 0:
-            percentage = 0
+            percentage = 0 if current == 0 else 100
         else:
-            percentage = (
-                difference / previous
-            ) * 100
-
+            percentage = (difference / previous) * 100
 
         return {
             "current": current,
@@ -27,50 +216,112 @@ class ComparisonService:
             )
         }
 
-
-
-    def compare_users(
+    def compare_numeric_section(
         self,
-        current,
-        previous
+        current_section,
+        previous_section
     ):
 
-        return {
+        comparison = {}
 
-            "average_active_users":
-            self.calculate_metric_change(
-                current["users"]["average_active_users"],
-                previous["users"]["average_active_users"]
-            ),
+        previous_section = previous_section or {}
 
+        for metric_name, current_value in current_section.items():
 
-            "total_new_users":
-            self.calculate_metric_change(
-                current["users"]["total_new_users"],
-                previous["users"]["total_new_users"]
+            if not isinstance(
+                current_value,
+                (int, float)
+            ):
+                continue
+
+            comparison[metric_name] = (
+                self.calculate_metric_change(
+                    current_value,
+                    previous_section.get(
+                        metric_name,
+                        0
+                    )
+                )
             )
 
-        }
+        return comparison
 
-
-
-    def compare_revenue(
+    def compare_ranked_items(
         self,
-        current,
-        previous
+        current_items,
+        previous_items,
+        name_key
     ):
 
-        return {
+        comparison = {}
 
-            "total_revenue":
-            self.calculate_metric_change(
-                current["revenue"]["total_revenue"],
-                previous["revenue"]["total_revenue"]
-            )
-
+        previous_lookup = {
+            item[name_key]: item
+            for item in previous_items
         }
 
+        current_lookup = {
+            item[name_key]: item
+            for item in current_items
+        }
 
+        all_names = (
+            set(current_lookup.keys())
+            | set(previous_lookup.keys())
+        )
+
+        for name in sorted(all_names):
+
+            current_item = current_lookup.get(
+                name,
+                {}
+            )
+
+            previous_item = previous_lookup.get(
+                name,
+                {}
+            )
+
+            item_comparison = {}
+
+            # Get every numeric metric
+            # available for this item.
+            metric_names = (
+                set(current_item.keys())
+                | set(previous_item.keys())
+            )
+
+            for metric_name in sorted(metric_names):
+
+                if metric_name == name_key:
+                    continue
+
+                current_value = current_item.get(
+                    metric_name,
+                    0
+                )
+
+                previous_value = previous_item.get(
+                    metric_name,
+                    0
+                )
+
+                if not isinstance(
+                    current_value,
+                    (int, float)
+                ):
+                    continue
+
+                item_comparison[metric_name] = (
+                    self.calculate_metric_change(
+                        current_value,
+                        previous_value
+                    )
+                )
+
+            comparison[name] = item_comparison
+
+        return comparison
 
     def compare_months(
         self,
@@ -78,19 +329,76 @@ class ComparisonService:
         previous
     ):
 
-        return {
+        previous = previous or {}
 
-            "users":
-            self.compare_users(
-                current,
-                previous
-            ),
+        comparison = {}
 
+        # ---------------------------
+        # Numeric summaries
+        # ---------------------------
 
-            "revenue":
-            self.compare_revenue(
-                current,
-                previous
-            )
+        numeric_sections = [
+            "users",
+            "engagement",
+            "revenue",
+        ]
 
-        }
+        for section in numeric_sections:
+
+            if section in current:
+
+                comparison[section] = (
+                    self.compare_numeric_section(
+                        current[section],
+                        previous.get(
+                            section,
+                            {}
+                        )
+                    )
+                )
+
+        # ---------------------------
+        # Event Summary
+        # ---------------------------
+
+        if (
+            "events" in current
+            and "top_events" in current["events"]
+        ):
+
+            comparison["events"] = {
+
+                "top_events":
+                self.compare_ranked_items(
+                    current["events"]["top_events"],
+                    previous
+                    .get("events", {})
+                    .get("top_events", []),
+                    name_key="event_name"
+                )
+
+            }
+
+        # ---------------------------
+        # Module Summary
+        # ---------------------------
+
+        if (
+            "modules" in current
+            and "top_modules" in current["modules"]
+        ):
+
+            comparison["modules"] = {
+
+                "top_modules":
+                self.compare_ranked_items(
+                    current["modules"]["top_modules"],
+                    previous
+                    .get("modules", {})
+                    .get("top_modules", []),
+                    name_key="module_name"
+                )
+
+            }
+
+        return comparison

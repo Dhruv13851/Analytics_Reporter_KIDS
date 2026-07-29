@@ -17,9 +17,7 @@ class Database:
 
     @classmethod
     def initialize(cls):
-        """
-        Initialize database engine only once.
-        """
+      
 
         if cls._engine is None:
 
@@ -46,9 +44,7 @@ class Database:
     @classmethod
     @contextmanager
     def get_session(cls):
-        """
-        Provides a transactional scope.
-        """
+      
 
         if cls._engine is None:
             cls.initialize()

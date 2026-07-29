@@ -33,9 +33,7 @@ class GA4Service:
         start_date: str,
         end_date: str,
     ) -> pd.DataFrame:
-        """
-        Generic GA4 report executor.
-        """
+       
 
         request = RunReportRequest(
             property=f"properties/{self.property_id}",
