@@ -6,18 +6,21 @@ from datetime import date, datetime
 class ReportExporter:
     OUTPUT_DIR = Path("output/reports")
 
-    def export_json(self, report: dict) -> Path:
+    def export_json(self, report, filename=None):
+
+        # Create directory if it doesn't exist
         self.OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-        metadata = report["metadata"]
+        if filename is None:
+            filename = (
+                f"monthly_report_{report['metadata']['year']}_"
+                f"{report['metadata']['month']:02d}.json"
+            )
 
-        filename = (
-            f"monthly_report_{metadata['year']}_{metadata['month']:02d}.json"
-        )
+        # Create a Path object
+        output_path = self.OUTPUT_DIR / filename
 
-        output_file = self.OUTPUT_DIR / filename
-
-        with output_file.open("w", encoding="utf-8") as f:
+        with output_path.open("w", encoding="utf-8") as f:
             json.dump(
                 report,
                 f,
@@ -25,7 +28,8 @@ class ReportExporter:
                 default=self._json_serializer,
             )
 
-        return output_file
+        # Return string path if you want to print it
+        return str(output_path)
 
     @staticmethod
     def _json_serializer(obj):
