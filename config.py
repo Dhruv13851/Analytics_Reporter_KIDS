@@ -16,6 +16,6 @@ class Config:
 
     GROQ_API_KEY = os.getenv("GROQ_API_KEY")
     GROQ_MODEL = os.getenv("GROQ_MODEL")
-    GROQ_TEMPERATURE = float(os.getenv("GROQ_TEMPERATURE", 0.2))
+    GROQ_TEMPERATURE = float(os.getenv("GROQ_TEMPERATURE", 0.5))
     GROQ_MAX_TOKENS = int(os.getenv("GROQ_MAX_TOKENS", 2048))
     GROQ_TIMEOUT = int(os.getenv("GROQ_TIMEOUT", 60))
