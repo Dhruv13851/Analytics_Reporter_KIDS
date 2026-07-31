@@ -2,7 +2,6 @@ import json
 from pathlib import Path
 from datetime import date, datetime
 
-
 class ReportExporter:
     OUTPUT_DIR = Path("output/reports")
 

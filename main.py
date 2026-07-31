@@ -25,7 +25,6 @@ def main():
         year=2026,
         month=6,
     )
-
    
     comparison_service = ComparisonService()
 
@@ -33,7 +32,6 @@ def main():
         current=current_report,
         previous=previous_report,
     )
-
    
     llm_service = LLMService()
 
@@ -61,7 +59,6 @@ def main():
         ai_analysis,
         filename="ai_analysis_2026_07.json",
     )
-
 
 if __name__ == "__main__":
     main()
